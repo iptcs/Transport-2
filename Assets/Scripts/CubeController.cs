@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour
 {
+    GameController myGameController;
+    public int myX, myY;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (GameController.airplaneSpawned == false)
-        {
-            GameController.airplane = gameObject;
-            gameObject.GetComponent<Renderer>().material.color = Color.red;
-        }
+        myGameController = GameObject.Find("GameControllerObject").GetComponent<GameController>();
     }
 
     // Update is called once per frame
@@ -20,23 +18,8 @@ public class CubeController : MonoBehaviour
     {
     }
     void OnMouseDown()
-    {
-        if (GameController.airplane == gameObject && GameController.activePlane != gameObject)
         {
-            GameController.activePlane = gameObject;
-            gameObject.GetComponent<Renderer>().material.color = Color.yellow;
+            myGameController.ProcessClick(gameObject, myX, myY);
         }
-        if (GameController.airplane == gameObject && GameController.activePlane == gameObject)
-        {
-            GameController.activePlane = null;
-            gameObject.GetComponent<Renderer>().material.color = Color.red;
-        }
-        if (GameController.airplane != gameObject && GameController.activePlane != null)
-        {
-            GameController.activePlane.GetComponent<Renderer>().material.color = Color.white;
-            GameController.airplane = gameObject;
-            GameController.activePlane = gameObject;
-            gameObject.GetComponent<Renderer>().material.color = Color.yellow;
-        }
-    }
 }
+
